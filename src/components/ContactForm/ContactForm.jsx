@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import css from './ContactForm.module.css';
+import { nanoid } from 'nanoid';
 
 class ContactForm extends Component {
   state = {
@@ -8,21 +9,30 @@ class ContactForm extends Component {
   };
 
   setData = event => {
-    event.preventDefault();
-    const {
-      target: { elements },
-    } = event;
+    const { name, value } = event.target;
     this.setState({
-      name: elements.name.value,
-      number: elements.number.value,
+      [name]: value,
     });
+  };
+
+  addContact = event => {
+    const { name, number } = this.state;
+    const newContact = {
+      name,
+      number,
+      id: nanoid(),
+    };
+    event.preventDefault();
+    this.props.addContact(newContact);
+    event.target.reset();
   };
 
   render() {
     return (
-      <form className={css.contactForm}>
+      <form className={css.contactForm} onSubmit={this.addContact}>
         <label htmlFor="name">Name</label>
         <input
+          onChange={this.setData}
           type="text"
           name="name"
           // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -33,6 +43,7 @@ class ContactForm extends Component {
           Number
           <label />
           <input
+            onChange={this.setData}
             type="tel"
             name="number"
             //   pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
