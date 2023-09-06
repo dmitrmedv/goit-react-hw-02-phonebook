@@ -6,13 +6,13 @@
   padding: 16px;
 }
 
-input {
+.contactForm input {
   margin-bottom: 16px;
   width: 80%;
   padding: 4px;
 }
 
-button {
+.btn {
   width: 100px;
   cursor: pointer;
 }
