@@ -4,7 +4,6 @@ const { Component } = require('react');
 
 class Filter extends Component {
   findContact = event => {
-    console.log(event.target.value);
     this.props.filter(event.target.value);
   };
 
